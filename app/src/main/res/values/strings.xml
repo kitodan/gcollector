@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CGM</string>
+    <string name="help_keep_your_county_clean">Help Keep Our County Clean</string>
+    <string name="cleaning_public_resources">Cleaning public resources</string>
+    <string name="waste_disposal">Waste disposal</string>
+    <string name="garbage_collection">Garbage collection</string>
+    <string name="what_we_do">What We do:</string>
+    <string name="monitoring_cleanliness_in_the_county">Monitoring cleanliness in the county</string>
+    <string name="private_cleaning_tenders">Private cleaning tenders</string>
+    <string name="pro__text">proceed</string>
+</resources>
