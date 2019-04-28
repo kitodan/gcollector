@@ -30,10 +30,10 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class Main2Activity extends AppCompatActivity {
-    private static final int PICK_IMAGE_REQUEST =1;
+    private static final int PICK_IMAGE_REQUEST = 1;
     private Button mButtonChooseImage;
     private Button mButtonUpload;
-    private TextView mTextViewShowUploads;
+    private Button mTextViewShowUploads;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     private StorageTask mUploadTask;
@@ -47,12 +47,21 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        mEditTextFileName = findViewById(R.id.edit_text_file_name);
-        mButtonChooseImage = findViewById(R.id.button_choose_image);
-        mButtonUpload = findViewById(R.id.button_upload);
-        mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
-        mImageView = findViewById(R.id.image_view);
-        mProgressBar = findViewById(R.id.progress_bar);
+        mEditTextFileName = (EditText) findViewById(R.id.edit_text_file_name);
+        mButtonChooseImage = (Button) findViewById(R.id.button_choose_image);
+        mButtonUpload = (Button) findViewById(R.id.button_upload);
+
+        mImageView = (ImageView) findViewById(R.id.image_view);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mTextViewShowUploads = (Button) findViewById(R.id.text_view_show_uploads);
+        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent main2Activity = new Intent(getApplicationContext(), login_user.class);
+                startActivity(main2Activity);
+            }
+        });
+
         FirebaseApp.initializeApp(Main2Activity.this);
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
@@ -66,16 +75,16 @@ public class Main2Activity extends AppCompatActivity {
         });
 
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mUploadTask != null && mUploadTask.isInProgress()) {
-                Toast.makeText(Main2Activity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onClick(View v) {
+                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                    Toast.makeText(Main2Activity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
 
-            } else {
-                uploadFile();
+                } else {
+                    uploadFile();
+                }
+
             }
-
-        }
         });
 
         mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
@@ -88,29 +97,32 @@ public class Main2Activity extends AppCompatActivity {
 
 
     }
-    public void openFileChooser(){
+
+    public void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data !=null && data.getData() !=null){
+                && data != null && data.getData() != null) {
             mImageUri = data.getData();
             Picasso.with(this).load(mImageUri).into(mImageView);
         }
     }
-    private String getFileExtension(Uri uri){
+
+    private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
-    private void uploadFile(){
-        if (mImageUri != null){
+
+    private void uploadFile() {
+        if (mImageUri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
             mUploadTask = fileReference.putFile(mImageUri)
@@ -150,13 +162,14 @@ public class Main2Activity extends AppCompatActivity {
                     });
 
 
-        }else {
+        } else {
             Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }
-    private void openImagesActivity(){
-        Intent intent= new Intent(this,Adminn.class);
+
+    private void openImagesActivity() {
+        Intent intent = new Intent(Main2Activity.this, Adminn.class);
         startActivity(intent);
     }
 }

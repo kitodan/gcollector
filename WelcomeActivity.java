@@ -27,7 +27,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("..........");
-                Intent mainActivity = new Intent(getApplicationContext(), login_user.class);
+                Intent mainActivity = new Intent(getApplicationContext(), signUpActivity.class);
                 progressDialog.dismiss();
                 startActivity(mainActivity);
             }

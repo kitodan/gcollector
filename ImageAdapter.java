@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,12 +39,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Upload uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getName());
-        Picasso.with(mContext)
-                .load(uploadCurrent.getmImageUrl())
-                //.placeholder(R.mipmap.ic_launcher)
-                .fit()
-                .centerCrop()
-                .into(holder.imageView);
+        RequestOptions options = new RequestOptions();
+        options.fitCenter();
+        Glide.with(mContext)
+                // .load(uploadCurrent.setImageUrl());
+                .load(uploadCurrent.getmImageUrl());
+//                .apply(options)
+//               // .placeholder(R.mipmap.ic_launcher)
+//                //.fit()
+//               // .centerCrop()
+//                .into(holder.imageView);
 
     }
 
@@ -79,8 +85,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select Action");
-            MenuItem doWhatever = menu.add(Menu.NONE, 1, 1, "COLLECTION STATUS");
-            MenuItem delete = menu.add(Menu.NONE, 2, 2, "DELETE");
+            MenuItem doWhatever = menu.add(Menu.NONE, 1, 1, "COLLECTED");
+            MenuItem delete = menu.add(Menu.NONE, 2, 2, "UNCOLLECTED");
 
             doWhatever.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);

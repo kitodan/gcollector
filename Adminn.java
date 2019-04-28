@@ -68,19 +68,19 @@ public class Adminn extends AppCompatActivity implements ImageAdapter.OnItemClic
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this,"Normal click at position:"+position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Normal click at position:" + position, Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onWhatEverClick(int position) {
-        Toast.makeText(this,"Whatever click at position:"+position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Whatever click at position:" + position, Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onDeleteClick(int position) {
-        Toast.makeText(this,"Delete click at position:"+position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Delete click at position:" + position, Toast.LENGTH_SHORT).show();
 
     }
 }
